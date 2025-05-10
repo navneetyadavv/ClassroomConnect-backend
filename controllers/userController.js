@@ -64,10 +64,25 @@ export const deleteUser = async (req, res) => {
 };
 
 
-export const getUsers = async (req, res) => {
+export const getStudents = async (req, res) => {
   try {
-    const users = await User.find().populate('classroom');
-    res.status(200).json(users);
+    const students = await User.find({ role: 'Student' })
+      .select('name email profilePicture classroom')
+      .populate('classroom', 'name')
+      .lean(); 
+    res.status(200).json(students);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+export const getTeachers = async (req, res) => {
+  try {
+    const teachers = await User.find({ role: 'Teacher' })
+      .select('name email profilePicture classroom')
+      .populate('classroom', 'name')
+      .lean(); 
+    res.status(200).json(teachers);
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
