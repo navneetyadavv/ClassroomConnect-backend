@@ -67,7 +67,7 @@ export const deleteUser = async (req, res) => {
 export const getStudents = async (req, res) => {
   try {
     const students = await User.find({ role: 'Student' })
-      .select('name email profilePicture classroom')
+      .select('name email classroom')
       .populate('classroom', 'name')
       .lean(); 
     res.status(200).json(students);
@@ -79,7 +79,7 @@ export const getStudents = async (req, res) => {
 export const getTeachers = async (req, res) => {
   try {
     const teachers = await User.find({ role: 'Teacher' })
-      .select('name email profilePicture classroom')
+      .select('name email classroom')
       .populate('classroom', 'name')
       .lean(); 
     res.status(200).json(teachers);

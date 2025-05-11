@@ -31,22 +31,6 @@ const userSchema = new mongoose.Schema({
     ref: 'Classroom',
     default: null
   },
-  profilePicture: {
-    type: String,
-    default: null
-  },
-  lastLogin: {
-    type: Date,
-    default: null
-  },
-  active: {
-    type: Boolean,
-    default: true
-  }
-}, {
-  timestamps: true,
-  toJSON: { virtuals: true },
-  toObject: { virtuals: true }
 });
 
 // Indexes

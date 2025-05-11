@@ -17,7 +17,9 @@ const SERVER_ERROR = {
 const handleLogin = async (model, req, res, role = null) => {
     try {
         const { email, password } = req.body;
-        const user = await model.findOne({ email });
+        
+        // Add .select('+password') to include the password field
+        const user = await model.findOne({ email }).select('+password');
         
         if (!user || !(await bcrypt.compare(password, user.password))) {
             return res.status(403).json(AUTH_ERROR);
@@ -40,6 +42,7 @@ const handleLogin = async (model, req, res, role = null) => {
             role: payload.role
         });
     } catch (err) {
+        console.error('Login error:', err);
         return res.status(500).json(SERVER_ERROR);
     }
 };
